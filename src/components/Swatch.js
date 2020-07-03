@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const SwatchElement = ({ className, onClick, colour }) => {
   return (
-    <span onClick={() => onClick(colour) }} className={className} />
+    <span onClick={() => onClick(colour)} className={className} />
   )
 }
 

@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Swatch from './components/Swatch'
 
-export const Swatchable = ({ onChange }) => {
+import { Colour } from './lib/ColourService'
+
+
+
+export const Swatchable = ({ onChange, extended = false }) => {
+
+  const [data, setData] = useState({ colours: [] })
+  const [isLoading, setIsLoading] = useState(false);
+ 
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      const colours = await Colour.fetchColourList(extended)
+      setData({colours})
+      setIsLoading(false)
+    }
+    fetchData()
+  }, [])
+
   return (
     <div>
-      <Swatch colour='255, 0, 0' onClick={onChange} />
-      <Swatch colour='0, 255, 0' onClick={onChange} />
-      <Swatch colour='0, 0, 255' onClick={onChange} />
+      { data.colours.map(colour => (
+        <Swatch colour={colour.toString()} key={`colour-${colour.toString()}`} onClick={onChange} />
+      ))}
+      <a>Refresh colours</a>
     </div>
   )
 }

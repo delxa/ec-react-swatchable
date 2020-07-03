@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-import { ExampleComponent } from 'ec-react-swatchable'
-import 'ec-react-swatchable/dist/index.css'
+import Swatchable from 'ec-react-swatchable'
 
-const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+class App extends Component {
+  handleOnChange = (colour) => {
+    console.log(colour)
+  }
+
+  render() {
+    return <Swatchable onChange={this.handleOnChange} extended />
+  }
 }
 
 export default App
