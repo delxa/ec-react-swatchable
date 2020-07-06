@@ -4,6 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/ec-react-swatchable.svg)](https://www.npmjs.com/package/ec-react-swatchable) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+See [DevNotes.md](https://github.com/delxa/ec-react-swatchable/blob/master/DevNotes.md) for the making of this library.
+
 ## Install
 
 Installation options depend on the availability of a private npm registry. For demo purposes, installing from GitHub is fine.
@@ -73,7 +75,7 @@ The `ColourService.js` file exports both the classs, as well as singleton instan
 Use the following to add your own custom colour space.
 
 1. Create your own [COLOUR].js file in `src/lib/spaces` Your toRgb() and fromRgb() should be exported
-2. Import the `toRgb() function into the `ColourService.js` file. Follow the existing pattern of the other importers.
+2. Import the `toRgb()` function into the `ColourService.js` file. Follow the existing pattern of the other importers.
 3. Add another call to use, along with the key of the `kind` you are matching
 4. If you want the conversion functions to be available, you'll also need to add the import and export functions to `src/index.js`. Again, use the existing patterns
 5. Add test coverage:
@@ -84,4 +86,4 @@ Use the following to add your own custom colour space.
 
 ## License
 
-MIT © [delxa](https://github.com/delxa)
+MIT © [Matt Bell](https://github.com/delxa)
