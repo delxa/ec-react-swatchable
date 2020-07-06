@@ -2,8 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const SwatchElement = ({ className, onClick, colour }) => {
+  const handleOnClick = (colour) => {
+    if (onClick && typeof onClick === 'function') {
+      onClick(colour)
+    }
+  }
   return (
-    <span onClick={() => onClick(colour)} className={className} />
+    <span onClick={() => handleOnClick(colour)} className={className} />
   )
 }
 

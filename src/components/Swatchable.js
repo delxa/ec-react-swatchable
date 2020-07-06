@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import Swatch from './Swatch'
+import styled from 'styled-components'
 
+import Swatch from './Swatch'
 import { Colour } from '../lib/ColourService'
+
+
+const RefreshLink = styled.a`
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 90%;
+`
+
 
 export const Swatchable = ({ onChange, extended = false }) => {
 
@@ -28,7 +37,7 @@ export const Swatchable = ({ onChange, extended = false }) => {
       { data.colours.map(colour => (
         <Swatch colour={colour.toString()} key={`colour-${colour.toString()}`} onClick={onChange} />
       ))}
-      <a onClick={reload}>Refresh colours</a>
+      <RefreshLink onClick={reload}>Refresh colours</RefreshLink>
     </div>
   )
 }
