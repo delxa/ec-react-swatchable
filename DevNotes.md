@@ -1,4 +1,70 @@
-# Development Notes
+## Code challenge Summary
+
+Thank you for the opportunity to get amongst this code challenge. I've not been this absorbed trying to solve something in quite some time.
+
+### What got done
+
+- A new library for a React component
+- Some basic styled UI
+- An extensible colourspace implementation that makes adding more easy
+
+### What didn't get done
+
+- Extensive tests of component, states and behaviors
+- typescript (Read why further down)
+- As much cleanup as I would have liked
+- Linting
+- Code running in the cloud (i generallly like doing this where practical.)
+
+If you do want to see some examples of testing, code running in cloud, here is some recent work also [Repo](https://github.com/delxa/aw-broccoli-co)|[Site](https://broccoli.mattbell.name/)
+
+### What I learnt
+
+- Rabbit holes. So many
+- create-react-library does what it says on the tin but honestly, so slow. Has to be a better way
+- Hooks are super useful. Keen to try out the reducer implementation!
+
+
+### Addressing the stage considerations
+
+#### Stage 1
+
+HSL conversion to and from RGB was added in. The code samples I found needed some adjustment in order to work with our data. These were made available for import into other dependent projects. I did look into the logic involved enough to understand what these are actually doing. Going from HSL to RGB is way harder with so many conditions to fulfil.
+
+#### Stage 2
+
+The webservice calls were pretty straight forward. I ended up using Hooks to implement the flow of triggeringa  request and updating the component state once the data was received.
+
+THe colour service handles the data and does the conversion before passing it back to hte component to keep it simplistic. The middleware approach to the service makes loading in additional types super easy.
+
+### Stage 3
+
+With the chosen approach, the hardest thing with BRGB was working out the maths. Otherwise, it was straight forward to implement this. With the middleware loaded in to do the conversion, hitting the other endpoint simply worked in displaying the swatches.
+
+### Stage 4
+
+The approach does make it straight forward to offer a baseline conversion for new colour spaces. I would also have liked a way to be able to be able to load in additional middleware from the consuming app, as well as to be able to provide data itself to the component, rather than relying on it's own approach.
+
+I did like the ColourSpaces as classes concept earlier on. There would have been a tradeoff in ease of implementing nore colorspaces but would have led to a much nicer way of playing with colours.
+
+This would have enabled things like:
+
+```js
+const hsl = new HSLColour('320, 40, 50')
+hsl.toRgb()
+
+// If it returned the new colour as an RGBColour, you could do something crazy like
+hsl.toRgb().toString()
+
+```
+
+Ultimately, this power and flexibility was not needed and again, would have made implemenation harder. It was sad to cut it.
+
+
+-------
+
+
+## Development Notes
 
 These are intended to take you through a bit more of the thinking around initial thoughts through implementation and final product, in a bit more detail than what is represented by the code
 
@@ -81,7 +147,7 @@ Colour
 
 ```
 
-Yes, I also added an implementation for hex colours. :)
+Yes, I also added an implementation for hex colours. It took 10 mins with this approach:)
 
 
 ## So, what happened to typescript?
@@ -91,5 +157,4 @@ I made great progress in getting the app, components etc set up with proper typi
 But to my deep frustration, the tooling was slowing EVERYTHING down by an order of magnitude and was hindering my progress so much that I ended up making the call to shift away from Typescript for the purpose of this assignment.
 
 I'm sure this could be partially my setup but I just did not have the time to debug it.
-
 

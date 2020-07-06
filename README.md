@@ -65,7 +65,7 @@ The component contains a couple of props to give you some flexibility
 Great news, these are exported from the main library and can be used in your code! See below for a rundown on the functions and how to use them.
 
 
-### Availanble functions
+### Available functions
 
 At the moment, the functions supported include:
 
@@ -163,14 +163,27 @@ We don't currently support direct conversions from the other spaces to each othe
 
 ### Extensibility of Colour spaces
 
-The Colour service within Swatchable is designed to be easily extended. The default colour spaces are stored within `src/lib/spaces` and provide an excellent example base on which to build your own colour space and conversions.
+The Colour service within Swatchable is designed to be easily extended. Once a colour space has a toRgb() function, they can be loaded into the Colour Service as middleware.
+
+```js
+// This is how the default colour handlers are loaded into the service.
+const Colour = new ColourService()
+Colour
+  .use('hsl', hslToRgb)
+  .use('brgb', brgbToRgb)
+  .use('hex', hexToRgb)
+```
+
+### Defining colour spaces
+
+The default colour spaces are stored within `src/lib/spaces` and provide an excellent example base on which to build your own colour space and conversions.
 
 Ostensibly, a colour space file consists of:
 
 - an exported `toRgb()` function that takes a colour object and returns RGB array array
 - an exported `fromRgb()` function that takes an RGB colour object and returns the array or string for the colourspace
 
-It is not always practical to convert back from RGB. If it isn't useful or required for your colour space, you don't need to add the `fromRgb()` function!
+It is not always practical to convert back from RGB. If it isn't useful or required for your colour space, you don't need to add the `fromRgb()` function! These are really only used as convenience functions inside the app.
 
 
 ### Adding your colour space
