@@ -21,9 +21,9 @@ const brgbObj = {
 const hexStr = '#FFCCDD'
 
 // 
-const hslVal = hslToRgb(hslObj).toString()
-const hexVal = hexToRgb(hexStr).toString()
-const brgbVal = brgbToRgb(brgbObj).toString()
+const hslVal = hslToRgb(hslObj)
+const hexVal = hexToRgb(hexStr)
+const brgbVal = brgbToRgb(brgbObj)
 
 
 class App extends Component {
@@ -44,9 +44,9 @@ class App extends Component {
         <p>You selected: {this.state.selected} <small>This uses the <code>onChange</code> prop of the component.</small></p>
         <hr />
         <h2>Inlined Conversion examples</h2>
-        <p>HSL to RGB: {hslToRgb(hslObj).toString()}</p>
-        <p>HEX to RGB: {hexToRgb(hexStr).toString()} </p>
-        <p>BRGB to RGB: {brgbToRgb(brgbObj).toString()} </p>
+        <p>HSL to RGB: {hslToRgb(hslObj)}</p>
+        <p>HEX to RGB: {hexToRgb(hexStr)} </p>
+        <p>BRGB to RGB: {brgbToRgb(brgbObj)} </p>
         <hr />
         <h2>Render Swatches</h2>
         <p><Swatch colour={hslVal} /> <strong>{hslVal}</strong></p>

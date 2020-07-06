@@ -5,7 +5,7 @@
   The example has been adapted to account for our S and L in our data being expressed as [0,100] instead of [0,1]
 */
 
-export function toRgb ({ hue: h, saturation, lightness }) {
+export function toRgb ({ hue: h, saturation, lightness }, toArray) {
   let s = saturation / 100
   let l = lightness / 100
 
@@ -21,48 +21,27 @@ export function toRgb ({ hue: h, saturation, lightness }) {
   else if (hp <= 5) rgb1 = [x, 0, c]
   else if (hp <= 6) rgb1 = [c, 0, x]
   let m = l - c * 0.5
-  return [
+  const values = [
     Math.round(255 * (rgb1[0] + m)),
     Math.round(255 * (rgb1[1] + m)),
     Math.round(255 * (rgb1[2] + m))
   ]
+  return toArray ? values : values.toString()
 }
 
-export function fromRgb ({red: r, green: g, blue: b}) {
-  r /= 255; g /= 255; b /= 255;
-  let max = Math.max(r, g, b);
-  let min = Math.min(r, g, b);
-  let d = max - min;
-  let h;
-  if (d === 0) h = 0;
-  else if (max === r) h = (g - b) / d % 6;
-  else if (max === g) h = (b - r) / d + 2;
-  else if (max === b) h = (r - g) / d + 4;
-  let l = (min + max) / 2;
-  let s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
-  return [h * 60, s * 100, l * 100];
+export function fromRgb ({red: r, green: g, blue: b}, toArray) {
+  r /= 255; g /= 255; b /= 255
+  let max = Math.max(r, g, b)
+  let min = Math.min(r, g, b)
+  let d = max - min
+  let h
+  if (d === 0) h = 0
+  else if (max === r) h = (g - b) / d % 6
+  else if (max === g) h = (b - r) / d + 2
+  else if (max === b) h = (r - g) / d + 4
+  let l = (min + max) / 2
+  let s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1))
+  let values = [h * 60, s * 100, l * 100]
+  values = values.map(v => Math.round(v))
+  return toArray ? values : values.toString()
 }
-
-class HSLColour {
-
-  constructor(hsl) {
-    this.hue = hsl.hue
-    this.saturation = hsl.saturation
-    this.lightness = hsl.lightness
-    this.raw = hsl
-  }
-
-  toRgb () {
-    return toRgb(this.raw)
-  }
-
-  fromRgb (rgbColour) {
-    return fromRgb(rgbColour)
-  }
-
-  toString () { 
-    return `${this.hue}, ${this.saturation}, ${this.lightness}`
-  }
-}
-
-export default HSLColour

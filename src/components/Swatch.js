@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const SwatchElement = ({ className, onClick, colour }) => {
+const hasHandler = (prop) => {
+  return prop && typeof prop === 'function'
+}
+
+const SwatchElement = ({ className, onClick, colour, selected }) => {
   const handleOnClick = (colour) => {
     if (onClick && typeof onClick === 'function') {
       onClick(colour)
@@ -19,7 +23,13 @@ const Swatch = styled(SwatchElement)`
   width: 30px;
   height: 30px;
   margin-right: 10px;
-  cursor: pointer;
+  cursor: ${props => hasHandler(props.onClick) ? 'pointer' : 'auto'};
+  border 2px solid ${props => props.selected ? '#454545' : 'transparent'};
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: ${props => hasHandler(props.onClick) ? '#454545' : 'transparent'};
+  }
 `
 
 export default Swatch

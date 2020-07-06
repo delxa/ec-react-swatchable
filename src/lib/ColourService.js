@@ -41,7 +41,6 @@ class ColourService {
       return this.convertColour(colour)
     })
   }
-
 }
 
 export const Colour = new ColourService()

@@ -6,13 +6,15 @@
 
 
 // Convert to RGB
-export function toRgb (hex) {
+export function toRgb (hex, toArray = false) {
   let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  return result ? [
+  const values = result ? [
     parseInt(result[1], 16),
     parseInt(result[2], 16),
     parseInt(result[3], 16)
-  ] : null
+  ] : []
+
+  return toArray ? values : values.toString()
 }
 
 export function fromRgb ({red, green, blue}) {
@@ -20,28 +22,5 @@ export function fromRgb ({red, green, blue}) {
     let hex = c.toString(16)
     return hex.length == 1 ? "0" + hex : hex
   }
-  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
+  return '#' + componentToHex(red) + componentToHex(green) + componentToHex(blue)
 }
-
-class HexColour {
-
-  constructor(hex) {
-    this.hex = hex
-  }
-
-  // Convert to RGB
-  toRgb () {
-    return toRgb(this.hex)
-  }
-
-  // Convert to Hex value from RGB.
-  fromRgb (rgbColour) {
-    return fromRgb(rgbColour)
-  }
-
-  toString () { 
-    return this.hex
-  }
-}
-
-export default HexColour

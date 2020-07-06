@@ -46,7 +46,7 @@ class Example extends Component {
 ```
 
 
-## Available Props
+### Available Props
 
 The component contains a couple of props to give you some flexibility
 
@@ -56,25 +56,128 @@ The component contains a couple of props to give you some flexibility
 
 ### onChange
 
-*function(colour: string)* If specified, this function will be called whenever the use clicks on a colour, returning a string representaion of the clicked colour.
+*function(colour: string)* If specified, this function will be called whenever the user clicks on a colour, returning an RGB string representaion of the clicked colour.
+
+
+
+## Using the conversion functions in your app
+
+Great news, these are exported from the main library and can be used in your code! See below for a rundown on the functions and how to use them.
+
+
+### Availanble functions
+
+At the moment, the functions supported include:
+
+#### hslToRgb()
+
+```js
+hslToRgb(colourObject: Object, toArray: Boolean)
+```
+
+Takes a HSL Colour object as an argument and returns the RGB values as a string or an array.
+
+```js
+const hslObj = {
+  hue: 278,
+  saturation: 24,
+  lightness: 47
+}
+hslToRgb(hslObj)        // '128,91,149'
+hslToRgb(hslObj, true)  // [128, 91, 149]
+
+```
+
+#### hexToRgb()
+
+```js
+hexToRgb(hexString: String, toArray: Boolean)
+```
+
+Takes a Hex Colour string as an argument and returns the RGB values as a string or an array.
+
+```js
+const hexValue = '#805b95'
+hexToRgb(hexValue)        // '128,91,149'
+hexToRgb(hexValue, true)  // [128, 91, 149]
+
+```
+
+
+#### brgbToRgb()
+
+```js
+brgbToRgb(colourObject: Object, toArray: Boolean)
+```
+
+Takes a BRGB Colour object as an argument and returns the RGB values as a string or an array.
+
+```js
+const brgbObj = {
+  bred: 6956,
+  bgreen: 7890,
+  bblue: 330
+}
+brgbToRgb(brgbObj)        // '177,201,8'
+brgbToRgb(brgbObj, true)  // [177, 201, 8]
+
+```
+
+### Example in use
+
+Here is a full example of the way you might use the conversion functions in your app.
+
+```js
+
+import react from 'react'
+import { hslToRgb } from 'ec-react-swatchable'
+
+const hslObj = {
+  hue: 278,
+  saturation: 24,
+  lightness: 47
+}
+
+export const ExampleWidget = () => {
+  const rgbArr = hslToRgb(hslObj, true)
+  const [red, green, blue] = rgbArr
+  return (
+    <div>
+      <p>Red: {red}</p>
+      <p>Green: {green}</p>
+      <p>Blue: {blue}</p>
+      <p>CSS: <code>rgb({rgbArr.join(', ')})</code></p>
+    </div>
+  )
+}
+
+```
 
 
 ## Colour Spaces
 
-The Colour service within Swatchable is designed to be easily extended. The default colour spaces are stored within `src/lib/spaces` and provide an excellent example base on which to build your own conversions.
+We currently support RGB (default), HSL, Hex and BRGB. For all intents and purposes, RGB is the primary colour space for our applications and so the widget and libraries offer conversion back to RGB.
+
+We don't currently support direct conversions from the other spaces to each other.
+
+
+### Extensibility of Colour spaces
+
+The Colour service within Swatchable is designed to be easily extended. The default colour spaces are stored within `src/lib/spaces` and provide an excellent example base on which to build your own colour space and conversions.
 
 Ostensibly, a colour space file consists of:
 
 - an exported `toRgb()` function that takes a colour object and returns RGB array array
 - an exported `fromRgb()` function that takes an RGB colour object and returns the array or string for the colourspace
 
-The `ColourService.js` file exports both the classs, as well as singleton instance of the class with the default convertors preloaded.
+It is not always practical to convert back from RGB. If it isn't useful or required for your colour space, you don't need to add the `fromRgb()` function!
+
 
 ### Adding your colour space
 
 Use the following to add your own custom colour space.
 
-1. Create your own [COLOUR].js file in `src/lib/spaces` Your toRgb() and fromRgb() should be exported
+1. Create your own [COLOUR].js file in `src/lib/spaces` Your `toRgb()` and `fromRgb()` should be exported
 2. Import the `toRgb()` function into the `ColourService.js` file. Follow the existing pattern of the other importers.
 3. Add another call to use, along with the key of the `kind` you are matching
 4. If you want the conversion functions to be available, you'll also need to add the import and export functions to `src/index.js`. Again, use the existing patterns
@@ -82,7 +185,7 @@ Use the following to add your own custom colour space.
   a. This should include unit tests for the conversion functions themselves, and
   b. Integration tests for iterating a colour set including your new colour space
 6. Pull request time! Follow the standard process of code review and merging.
-
+7. [OPTIONAL] If you are using a private NPM repo, you can now publish the latest version.
 
 ## License
 
